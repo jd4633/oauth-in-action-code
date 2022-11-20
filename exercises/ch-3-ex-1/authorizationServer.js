@@ -119,6 +119,7 @@ app.post('/approve', function(req, res) {
 			}
 
 			// save the code and request for later
+			console.log("issuing code: " + code);
 			codes[code] = { authorizationEndpointRequest: query, scope: scope, user: user };
 		
 			var urlParsed =url.parse(query.redirect_uri);
@@ -151,6 +152,7 @@ app.post('/approve', function(req, res) {
 
 app.post("/token", function(req, res){
 	
+	console.log ("in post/token");
 	var auth = req.headers['authorization'];
 	if (auth) {
 		// check the auth header
@@ -158,6 +160,9 @@ app.post("/token", function(req, res){
 		var clientId = querystring.unescape(clientCredentials[0]);
 		var clientSecret = querystring.unescape(clientCredentials[1]);
 	}
+	console.log("received clientId: " + clientId);
+	console.log("received clientSecret: " + clientSecret);
+	console.log("received code: " + req.body.code);
 	
 	// otherwise, check the post body
 	if (req.body.client_id) {
