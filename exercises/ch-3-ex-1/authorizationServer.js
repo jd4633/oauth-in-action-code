@@ -59,7 +59,7 @@ app.get("/authorize", function(req, res){
 		res.render('error', {error: 'Invalid redirect URI'});
 		return;
 	} else {
-		
+		console.log("scope from request: " + req.query.scope)
 		var rscope = req.query.scope ? req.query.scope.split(' ') : undefined;
 		var cscope = client.scope ? client.scope.split(' ') : undefined;
 		if (__.difference(rscope, cscope).length > 0) {
@@ -76,6 +76,7 @@ app.get("/authorize", function(req, res){
 		
 		requests[reqid] = req.query;
 		
+		console.log("authorize about to call approve with client: " + client + " reqid: " + reqid + " scope: " + rscope);
 		res.render('approve', {client: client, reqid: reqid, scope: rscope});
 		return;
 	}
@@ -87,6 +88,8 @@ app.post('/approve', function(req, res) {
 	var reqid = req.body.reqid;
 	var query = requests[reqid];
 	delete requests[reqid];
+
+	console.log("in approve");
 
 	if (!query) {
 		// there was no matching saved request, this is an error
