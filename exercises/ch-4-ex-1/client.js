@@ -48,6 +48,7 @@ app.get('/', function (req, res) {
 
 app.get('/authorize', function(req, res){
 
+	console.log("in authorize");
 	access_token = null;
 	refresh_token = null;
 	scope = null;
