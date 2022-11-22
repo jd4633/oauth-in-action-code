@@ -57,27 +57,26 @@ var requireAccessToken = function(req, res, next) {
 	}
 };
 
-var aliceFavorites = {
-	'movies': ['The Multidmensional Vector', 'Space Fights', 'Jewelry Boss'],
+var favorites = []
+
+favorites["alice"] = {
+	'movies': ['The Multidimensional Vector', 'Space Fights', 'Jewelry Boss'],
 	'foods': ['bacon', 'pizza', 'bacon pizza'],
 	'music': ['techno', 'industrial', 'alternative']
 };
 
-var bobFavorites = {
+favorites["bob"] = {
 	'movies': ['An Unrequited Love', 'Several Shades of Turquoise', 'Think Of The Children'],
 	'foods': ['bacon', 'kale', 'gravel'],
 	'music': ['baroque', 'ukulele', 'baroque ukulele']
 };
 
 app.get('/favorites', getAccessToken, requireAccessToken, function(req, res) {
-	
-	/*
-	 * Get different user information based on the information of who approved the token
-	 */
-	
-	var unknown = {user: 'Unknown', favorites: {movies: [], foods: [], music: []}};
-	res.json(unknown);
-
+	var userResponse = {user: 'Unknown', favorites: {movies: [], foods: [], music: []}};
+	if (req.access_token.user) {
+		userResponse = {user: req.access_token.user, favorites: favorites[req.access_token.user]};
+	}
+	res.json(userResponse);
 });
 
 var server = app.listen(9002, 'localhost', function () {

@@ -143,6 +143,8 @@ app.get('/get_words', function (req, res) {
 		res.render('words', {words: body.words, timestamp: body.timestamp, result: 'get'});
 		return;
 	} else {
+		console.log("Error while reading word");
+		console.log(JSON.stringify(resource));		
 		res.render('words', {words: '', timestamp: 0, result: 'noget'});
 		return;
 	}
@@ -168,6 +170,8 @@ app.get('/add_word', function (req, res) {
 		res.render('words', {words: '', timestamp: 0, result: 'add'});
 		return;
 	} else {
+		console.log("Error while adding word");
+		console.log(JSON.stringify(resource));
 		res.render('words', {words: '', timestamp: 0, result: 'noadd'});
 		return;
 	}
@@ -190,6 +194,8 @@ app.get('/delete_word', function (req, res) {
 		res.render('words', {words: '', timestamp: 0, result: 'rm'});
 		return;
 	} else {
+		console.log("Error while deleting word");
+		console.log(JSON.stringify(resource));		
 		res.render('words', {words: '', timestamp: 0, result: 'norm'});
 		return;
 	}
